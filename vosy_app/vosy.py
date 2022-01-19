@@ -35,6 +35,7 @@ def my_utility_processor():
 CONNECTED_NODE_ADDRESS = "http://0.0.0.0:5000"
 
 posts = []
+subjects = []
 
 
 def fetch_posts():
@@ -52,14 +53,20 @@ def fetch_posts():
         global posts
         posts = sorted(surveys, key=lambda k: k['timestamp'],
                        reverse=True)
+        global subjects
+        subjects = [survey['subject'] for survey in surveys]
 
 
 @app.route('/')
 def index():
     fetch_posts()
+    select = request.form.get('subject_selected')
+    print(select)
     return render_template('index.html',
                            title='A Simple Blockchain based Voting System',
                            posts=posts,
+                           subjects=subjects,
+                           select=select,
                            node_address=CONNECTED_NODE_ADDRESS,
                            readable_time=timestamp_to_string)
 
@@ -102,6 +109,7 @@ def submit_textarea():
     author = get_ip(request.remote_addr)
     questionid = request.form["questionid"]
     question = request.form["question"]
+    subject = request.form["subject"]
     answersList = request.form["answer"].split('|')
     opening_time = int(request.form["opening_time"])*60
     answers = {}
@@ -113,6 +121,7 @@ def submit_textarea():
         'type' : 'open',
         'content' : {
             'questionid': questionid,
+            'subject': subject,
             'question': question,
             'answers': answers,
             'opening_time': opening_time,
