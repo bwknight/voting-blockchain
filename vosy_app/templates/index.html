@@ -27,6 +27,14 @@
 	          <input name="questionid" type="text" placeholder="2354" class="form-control input-md" required="">
 	          </div>
 	        </div>
+
+                <!-- Textarea question -->
+	        <div class="form-group">
+	          <label class="col-md-12" for="message">Subject</label>
+	          <div class="col-md-12">
+	            <textarea class="form-control" placeholder="Sport, Social, Politices etc." name="subject"></textarea>
+	          </div>
+	        </div>
 	        
 	        <!-- Textarea question -->
 	        <div class="form-group">
@@ -71,8 +79,14 @@
 
 	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 	<div class="container">
+        <select name="subject_selected"  action="/">
+            {% for subject in subjects %}
+                <option value="{{subject}}">{{subject}}</option>"
+            {% endfor %}
+        </select>
 	    <div class="row">
 	    	{% for post in posts %}
+                {% if post.subject == {{subject_selected}} %}
 	        <div class="col-sm-8">
 	            <div class="panel panel-white post panel-shadow">
 	                <div class="post-heading">
@@ -128,6 +142,7 @@
 	                </div>
 	            </div>
 	        </div>
+                {% endif %}
 	        {% endfor %} 
 	    </div>
 	</div>
