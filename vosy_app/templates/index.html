@@ -79,71 +79,71 @@
 
 	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 	<div class="container">
-        <select name="subject_selected"  action="/">
+        <select name="subject_selected" onchange="myFunction()">
             {% for subject in subjects %}
                 <option value="{{subject}}">{{subject}}</option>"
             {% endfor %}
         </select>
 	    <div class="row">
 	    	{% for post in posts %}
-                {% if post.subject == {{subject_selected}} %}
-	        <div class="col-sm-8">
-	            <div class="panel panel-white post panel-shadow">
-	                <div class="post-heading">
-	                    <div class="pull-left image">
-	                        <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">
-	                    </div>
-	                    <div class="pull-left meta">
-	                        <div class="title h5">
-	                            <a href="#"><b>{{post.author}}</b></a>
-	                            made a post with id {{post.questionid}}.
-	                        </div>
-	                        <h6 class="text-muted time">{{readable_time(post.timestamp)}}</h6>
-	                    </div>
-	                    <div class="post_box-options">
-	                    	<a href="/close_survey?id={{post.questionid}}">
-		                    	<button type="button" class="btn btn-danger btn-circle">
-		                    		<i class="glyphicon glyphicon-remove"></i>
-		                    	</button>
-	                    	</a>
-	                    </div>
-	                </div> 
-	                <div class="post-description"> 
-	                    <p>{{post.question}}</p>
-	                    {% for answer, votes in post.answers.items() %} 
-		                    {% if post.status == 'opening' %}
-		                    <div class="stats">
-		                        <a href="/vote?id={{post.questionid}}&answer={{answer}}" class="btn btn-default stat-item">
-		                            {{answer}} | <i class="fa fa-thumbs-up icon"></i>{{len(votes)}}
-		                        </a>
+				{% if post.subject == subject_selected_drop %}
+					<div class="col-sm-8">
+						<div class="panel panel-white post panel-shadow">
+							<div class="post-heading">
+								<div class="pull-left image">
+									<img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">
+								</div>
+								<div class="pull-left meta">
+									<div class="title h5">
+										<a href="#"><b>{{post.author}}</b></a>
+										made a post with id {{post.questionid}}.
+									</div>
+									<h6 class="text-muted time">{{readable_time(post.timestamp)}}</h6>
+								</div>
+								<div class="post_box-options">
+									<a href="/close_survey?id={{post.questionid}}">
+										<button type="button" class="btn btn-danger btn-circle">
+											<i class="glyphicon glyphicon-remove"></i>
+										</button>
+									</a>
+								</div>
+							</div>
+							<div class="post-description">
+								<p>{{post.question}}</p>
+								{% for answer, votes in post.answers.items() %}
+									{% if post.status == 'opening' %}
+									<div class="stats">
+										<a href="/vote?id={{post.questionid}}&answer={{answer}}" class="btn btn-default stat-item">
+											{{answer}} | <i class="fa fa-thumbs-up icon"></i>{{len(votes)}}
+										</a>
 
-		                        {{votes}}
-		                    </div>
-		                    {% else %}
-		                    	{% if len(votes) == maxvote(post) %}
-			                    <div class="stats">
-			                        <a href="/vote?id={{post.questionid}}&answer={{answer}}" class="btn btn-primary stat-item">
-			                            {{answer}} | <i class="fa fa-thumbs-up icon"></i>{{len(votes)}}
-			                        </a>
+										{{votes}}
+									</div>
+									{% else %}
+										{% if len(votes) == maxvote(post) %}
+										<div class="stats">
+											<a href="/vote?id={{post.questionid}}&answer={{answer}}" class="btn btn-primary stat-item">
+												{{answer}} | <i class="fa fa-thumbs-up icon"></i>{{len(votes)}}
+											</a>
 
-			                        {{votes}}
-			                    </div>
-			                    {% else %}
-			                    <div class="stats">
-			                        <a href="/vote?id={{post.questionid}}&answer={{answer}}" class="btn btn-default stat-item">
-			                            {{answer}} | <i class="fa fa-thumbs-up icon"></i>{{len(votes)}}
-			                        </a>
+											{{votes}}
+										</div>
+										{% else %}
+										<div class="stats">
+											<a href="/vote?id={{post.questionid}}&answer={{answer}}" class="btn btn-default stat-item">
+												{{answer}} | <i class="fa fa-thumbs-up icon"></i>{{len(votes)}}
+											</a>
 
-			                        {{votes}}
-			                    </div>
-			                    {% endif %}
-	                    	{% endif %}
-	                    {% endfor %} 
-	                </div>
-	            </div>
-	        </div>
-                {% endif %}
-	        {% endfor %} 
+											{{votes}}
+										</div>
+										{% endif %}
+									{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				{% endif %}
+	        {% endfor %}
 	    </div>
 	</div>
 
